@@ -1,0 +1,40 @@
+<section class="bg-bg-muted">
+  <div class="mx-auto max-w-7xl px-4 py-16">
+    <h2 class="text-2xl font-bold mb-10">Participe da Luta</h2>
+
+    <div class="grid gap-6 md:grid-cols-3">
+      {[
+        {
+          title: "Construa o Comitê em seu estado",
+          text: "Ajude a fortalecer a organização territorial do Comitê.",
+        },
+        {
+          title: "Participe de uma comissão",
+          text: "Atue nas frentes de comunicação, formação e articulação.",
+        },
+        {
+          title: "Apoie nossas ações",
+          text: "Contribua para fortalecer nossas atividades políticas.",
+        },
+      ].map((item, index) => (
+        <div class="border border-border rounded-lg p-6 bg-bg">
+          <h3 class="font-semibold mb-2">{item.title}</h3>
+          <p class="text-sm text-text-secondary mb-4">{item.text}</p>
+
+          {index === 2 ? (
+            <button
+              id="openSupportModal"
+              class="font-semibold text-primary hover:underline"
+            >
+              Apoiar a luta →
+            </button>
+          ) : (
+            <a href="/contato" class="font-semibold text-primary hover:underline">
+              Saiba mais →
+            </a>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

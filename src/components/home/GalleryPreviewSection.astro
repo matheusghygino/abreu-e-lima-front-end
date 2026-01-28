@@ -1,0 +1,56 @@
+---
+
+import { photos, videos } from "../../lib/gallery.mock";
+import PhotoCard from "../galeria/PhotoCard.astro";
+import VideoCard from "../galeria/VideoCard.astro";
+import PhotoModal from "../galeria/PhotoModal.astro";
+
+const latestPhotos = photos.slice(0, 4);
+const latestVideos = videos.slice(0, 4);
+---
+
+<section class="bg-bg-muted">
+  <div class="mx-auto max-w-7xl px-4 py-16 space-y-14">
+    <!-- HEADER -->
+    <div>
+      <h2 class="text-2xl font-bold mb-2">Galeria</h2>
+      <p class="text-text-secondary">
+        Registros das atividades, atos e formações do Comitê.
+      </p>
+    </div>
+
+    <!-- FOTOS -->
+    <div>
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-xl font-semibold">Fotos</h3>
+        <a href="/galeria/fotos" class="text-primary font-semibold hover:underline">
+          Ver todas →
+        </a>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
+        {latestPhotos.map((photo) => (
+          <PhotoCard {...photo} />
+        ))}
+      </div>
+    </div>
+
+    <!-- VÍDEOS -->
+    <div>
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-xl font-semibold">Vídeos</h3>
+        <a href="/galeria/videos" class="text-primary font-semibold hover:underline">
+          Ver todos →
+        </a>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
+        {latestVideos.map((video) => (
+          <VideoCard {...video} />
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <PhotoModal />
+</section>

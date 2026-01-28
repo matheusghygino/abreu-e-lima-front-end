@@ -1,0 +1,73 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Section from "../../components/ui/Section.astro";
+import ActivityCard from "../../components/atuacao/ActivityCard.astro";
+import { activities } from "../../lib/activities.mock";
+---
+
+<BaseLayout title="Atuação — Comitê Abreu e Lima">
+  <main>
+    <Section
+      title="Atuação"
+      subtitle="Organização, mobilização e formação política na prática."
+    >
+      <!-- BLOCO INSTITUCIONAL -->
+      <div class="mx-auto max-w-3xl space-y-5 text-text-secondary">
+        <p>
+          A atuação do Comitê Anti-Imperialista General Abreu e Lima se orienta
+          por uma perspectiva internacionalista, anti-imperialista e de
+          solidariedade entre os povos. Nosso trabalho busca fortalecer a
+          organização política independente da classe trabalhadora e a
+          articulação entre movimentos, partidos e organizações comprometidas
+          com a luta contra o imperialismo.
+        </p>
+
+        <p>
+          Atuamos na construção e organização de atos públicos, jornadas de
+          mobilização, atividades de formação política, campanhas de
+          solidariedade internacional e articulações com organizações populares,
+          partidos políticos e representações diplomáticas de países em luta
+          contra a dominação imperialista.
+        </p>
+
+        <!-- ÁREAS DE ATUAÇÃO -->
+        <ul class="mt-6 grid gap-3 text-sm sm:grid-cols-2">
+          <li>• Organização de atos e manifestações políticas</li>
+          <li>• Formação política e atividades de estudo</li>
+          <li>• Campanhas de solidariedade internacional</li>
+          <li>• Articulação com partidos e movimentos sociais</li>
+          <li>• Parcerias e diálogo com embaixadas</li>
+        </ul>
+      </div>
+
+      <!-- DIVISOR CLARO -->
+      <div class="my-14 border-t border-border"></div>
+
+      <!-- BLOCO DOS REGISTROS -->
+      <div class="mb-8 max-w-2xl">
+        <h2 class="text-2xl font-semibold">
+          Registros de Atuação
+        </h2>
+        <p class="mt-2 text-sm text-text-secondary">
+          Abaixo estão alguns registros de atividades, atos e formações
+          organizadas ou construídas com a participação do Comitê.
+        </p>
+      </div>
+
+      <!-- GRID DE CARDS -->
+      <div class="grid gap-8 md:grid-cols-3">
+        {activities.map((activity) => (
+          <ActivityCard
+            title={activity.title}
+            excerpt={activity.excerpt}
+            image={activity.image}
+            href={`/atuacao/${activity.slug}`}
+            date={activity.date}
+            location={activity.location}
+            tags={activity.tags}
+          />
+        ))}
+      </div>
+    </Section>
+  </main>
+</BaseLayout>

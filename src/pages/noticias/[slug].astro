@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NewsHeader from "../../components/news/NewsHeader.astro";
+import NewsBody from "../../components/news/NewsBody.astro";
+import NewsTags from "../../components/news/NewsTags.astro";
+import { news } from "../../lib/news.mock";
+import RelatedNews from "../../components/news/RelatedNews.astro";
+
+export function getStaticPaths() {
+  return news.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+---
+
+<BaseLayout title={`${post.title} — Comitê Anti-Imperialista Abreu e Lima`}>
+  <article class="mx-auto max-w-3xl px-4 py-14">
+    <NewsHeader post={post} />
+    <NewsBody post={post} />
+    <NewsTags tags={post.tags} />
+    <RelatedNews currentPost={post} />
+  </article>
+</BaseLayout>

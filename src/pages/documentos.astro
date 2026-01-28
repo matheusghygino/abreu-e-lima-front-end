@@ -1,0 +1,115 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/ui/Section.astro";
+import DocumentCard from "../components/ui/DocumentCard.astro";
+---
+
+<BaseLayout
+  title="Documentos — Comitê Anti-Imperialista Abreu e Lima"
+  description="Resoluções, relatórios, publicações e documentos políticos do Comitê Anti-Imperialista Abreu e Lima."
+>
+  <main>
+    <Section
+      title="Documentos do Comitê"
+      subtitle="Resoluções, relatórios, publicações e materiais políticos produzidos pelo Comitê."
+    >
+
+      <!-- RESOLUÇÕES -->
+      <div class="mt-12">
+        <h2 class="mb-6 text-xl font-semibold">
+          Resoluções e Regimentos
+        </h2>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <DocumentCard
+            title="Regimento do Comitê Anti-Imperialista Abreu e Lima"
+            file="/documentos/Regimento-CAL.pdf"
+            type="PDF"
+          />
+
+          <DocumentCard
+            title="Resoluções do II Encontro Anti-Imperialista"
+            file="/documentos/RESOLUÇÕES-II-ENCONTRO.docx"
+            type="DOCX"
+          />
+        </div>
+      </div>
+
+      <!-- ENCONTROS -->
+      <div class="mt-16">
+        <h2 class="mb-6 text-xl font-semibold">
+          Encontros e Relatórios
+        </h2>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <DocumentCard
+            title="Encontro Anti-Imperialista Brasil"
+            file="/documentos/Encontro-anti-imperialista-Brasil.docx"
+            type="DOCX"
+          />
+
+          <DocumentCard
+            title="Relatório do II Encontro Anti-Imperialista"
+            file="/documentos/Relatório-do-II-Encontro-Antimperialista.doc"
+            type="DOC"
+          />
+
+          <DocumentCard
+            title="Informe de Atividades do Comitê"
+            file="/documentos/Informe-de-actividade-CAL.docx"
+            type="DOCX"
+          />
+        </div>
+      </div>
+
+      <!-- PUBLICAÇÕES -->
+      <div class="mt-16">
+        <h2 class="mb-6 text-xl font-semibold">
+          Publicações e Jornal
+        </h2>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <DocumentCard
+            title="Jornal Labareda — Edição 01"
+            file="/documentos/JORNAL-LABAREDA-Edição-01.pdf"
+            type="PDF"
+          />
+
+          <DocumentCard
+            title="Jornal Labareda — Edição 03"
+            file="/documentos/JORNAL-LABAREDA-Edição-03.pdf"
+            type="PDF"
+          />
+
+          <DocumentCard
+            title="Jornal Labareda — Edição 04"
+            file="/documentos/Jornal-Labareda-edição-04.pdf"
+            type="PDF"
+          />
+        </div>
+      </div>
+
+      <!-- FORMAÇÃO -->
+      <div class="mt-16">
+        <h2 class="mb-6 text-xl font-semibold">
+          Formação e Organização
+        </h2>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <DocumentCard
+            title="Tarefas da Frente Internacional contra o Fascismo"
+            file="/documentos/Tarefas-da-Frente-Internacional-contra-o-fascismo.docx"
+            type="DOCX"
+          />
+
+          <DocumentCard
+            title="Atividades desenvolvidas pelo Comitê (2019)"
+            file="/documentos/Atividades-desenvolvidas-pelo-CAL-2019.pdf"
+            type="PDF"
+          />
+        </div>
+      </div>
+
+    </Section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,9 @@
+---
+import type { Post } from "../../lib/content.mock";
+const { post } = Astro.props as { post: Post };
+---
+<a href={`/jornal/${post.slug}`} class="block rounded-2xl border border-neutral-200 p-5 hover:border-neutral-900">
+  <div class="text-xs text-neutral-500">{post.publishedAt}</div>
+  <div class="mt-2 text-lg font-semibold leading-snug">{post.title}</div>
+  <div class="mt-2 text-sm text-neutral-600">{post.excerpt}</div>
+</a>

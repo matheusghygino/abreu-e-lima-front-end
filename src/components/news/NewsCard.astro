@@ -1,0 +1,36 @@
+---
+import NewsMeta from "./NewsMeta.astro";
+const { post } = Astro.props;
+---
+
+<article class="group overflow-hidden rounded-lg border border-border">
+  <a href={`/noticias/${post.slug}`}>
+    <img
+      src={post.image}
+      alt={post.title}
+      class="h-48 w-full object-cover transition group-hover:scale-105"
+    />
+  </a>
+
+  <div class="p-4 space-y-3">
+    <NewsMeta post={post} />
+
+    <h3 class="text-lg font-semibold leading-snug">
+      <a href={`/noticias/${post.slug}`} class="hover:text-primary">
+        {post.title}
+      </a>
+    </h3>
+
+    <p class="text-sm text-text-secondary">
+      {post.excerpt}
+    </p>
+
+    <div class="flex flex-wrap gap-2 pt-2">
+      {post.tags.map(tag => (
+        <span class="rounded-full bg-bg-muted px-3 py-1 text-xs">
+          {tag}
+        </span>
+      ))}
+    </div>
+  </div>
+</article>

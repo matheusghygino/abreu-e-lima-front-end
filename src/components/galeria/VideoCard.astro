@@ -1,0 +1,19 @@
+---
+const { title, embedUrl, date } = Astro.props;
+---
+
+<div class="overflow-hidden rounded-lg bg-bg shadow-sm">
+  <div class="aspect-video w-full">
+    <iframe
+      src={embedUrl}
+      class="h-full w-full"
+      allowfullscreen
+      loading="lazy"
+    ></iframe>
+  </div>
+
+  <div class="p-3 text-sm">
+    <p class="font-medium">{title}</p>
+    <span class="text-xs text-text-secondary">{date}</span>
+  </div>
+</div>

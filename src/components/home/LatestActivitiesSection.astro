@@ -1,0 +1,35 @@
+---
+import Section from "../ui/Section.astro";
+import ActivityCard from "../atuacao/ActivityCard.astro";
+import { activities } from "../../lib/activities.mock";
+
+const latest = activities.slice(0, 3);
+---
+
+<Section
+  title="Atuação"
+  subtitle="Últimas atividades realizadas pelo Comitê."
+>
+  <div class="grid gap-6 md:grid-cols-3">
+    {latest.map((activity) => (
+      <ActivityCard
+        title={activity.title}
+        excerpt={activity.excerpt}
+        image={activity.image}
+        href={`/atuacao/${activity.slug}`}
+        date={activity.date}
+        location={activity.location}
+        tags={activity.tags}
+      />
+    ))}
+  </div>
+
+  <div class="mt-8">
+    <a
+      href="/atuacao"
+      class="font-semibold text-primary hover:underline"
+    >
+      Ver toda a atuação →
+    </a>
+  </div>
+</Section>

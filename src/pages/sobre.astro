@@ -1,0 +1,80 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import ManifestoHero from "../components/manifesto/ManifestoHero.astro";
+import ManifestoSection from "../components/manifesto/ManifestoSection.astro";
+import PrinciplesGrid from "../components/manifesto/PrinciplesGrid.astro";
+import ActionAreas from "../components/manifesto/ActionAreas.astro";
+import ManifestoCTA from "../components/manifesto/ManifestoCTA.astro";
+---
+
+<BaseLayout
+  title="Manifesto — Comitê Anti-Imperialista Abreu e Lima"
+  description="Manifesto político do Comitê Anti-Imperialista General Abreu e Lima"
+>
+  <!-- HERO -->
+  <ManifestoHero />
+
+  <!-- QUEM SOMOS -->
+  <ManifestoSection
+    title="Quem somos"
+    content={`
+O Comitê Anti-Imperialista General Abreu e Lima é uma organização política
+internacionalista dedicada à luta contra o imperialismo, à defesa da soberania
+dos povos e à autodeterminação das nações. Atua de forma independente,
+articulando militantes, organizações políticas e movimentos sociais
+comprometidos com a transformação social.
+
+O Comitê surge da necessidade histórica de organização frente à intensificação
+das intervenções militares, sanções econômicas, golpes institucionais e
+mecanismos de dominação política, econômica e cultural impostos pelas potências
+imperialistas, especialmente sobre os povos do Sul Global.
+
+Inspirado na tradição de luta anti-imperialista da América Latina e na
+solidariedade internacional entre a classe trabalhadora e os povos oprimidos,
+o Comitê busca fortalecer vínculos internacionais, promover ações conjuntas e
+contribuir para a construção de uma frente ampla de resistência ao
+imperialismo e ao fascismo.
+
+Nossa atuação se baseia na unidade na diversidade, na ação política concreta,
+na formação militante e na construção de instrumentos coletivos capazes de
+intervir na realidade, fortalecer a consciência política e impulsionar a luta
+por um projeto emancipador para os povos.
+`}
+  />
+
+  <!-- POR QUE UM COMITÊ -->
+  <ManifestoSection
+    title="Por que um Comitê Anti-Imperialista"
+    content={`
+Vivemos uma etapa histórica marcada pela ofensiva imperialista em escala
+global, pela militarização das relações internacionais e pela ampliação de
+guerras, bloqueios econômicos e intervenções diretas ou indiretas contra
+nações que buscam caminhos soberanos de desenvolvimento.
+
+Esse processo se expressa também no fortalecimento de forças reacionárias,
+no avanço do fascismo, na criminalização das lutas populares e na imposição de
+políticas neoliberais que aprofundam a dependência econômica e a exploração
+dos trabalhadores e dos povos.
+
+Diante desse cenário, torna-se fundamental a construção de instrumentos
+políticos capazes de articular a resistência anti-imperialista, promover a
+formação política crítica e organizar ações concretas de solidariedade
+internacional entre os povos em luta.
+
+O Comitê Anti-Imperialista General Abreu e Lima nasce, portanto, como um
+espaço de organização, articulação e ação coletiva, comprometido com a
+construção de uma alternativa política baseada na soberania, na justiça
+social e no internacionalismo.
+`}
+  />
+
+  <!-- PRINCÍPIOS -->
+  <PrinciplesGrid />
+
+  <!-- EIXOS DE ATUAÇÃO -->
+  <ActionAreas />
+
+  <!-- CHAMADO POLÍTICO -->
+  <ManifestoCTA />
+</BaseLayout>

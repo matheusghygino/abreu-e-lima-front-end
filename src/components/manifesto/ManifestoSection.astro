@@ -1,0 +1,24 @@
+---
+const { title, content } = Astro.props;
+
+// Quebra em parágrafos por linha em branco
+const paragraphs =
+  typeof content === "string"
+    ? content.trim().split(/\n\s*\n/g)
+    : [];
+---
+
+<section class="py-16">
+  <!-- Container CENTRALIZADO e LARGO, mas com limite saudável -->
+  <div class="mx-auto w-full max-w-6xl px-4 md:px-8">
+    <h2 class="mb-6 text-2xl md:text-3xl font-semibold">
+      {title}
+    </h2>
+
+    <div class="text-text-secondary leading-relaxed text-base md:text-lg">
+      {paragraphs.map((p) => (
+        <p class="mb-6 last:mb-0">{p}</p>
+      ))}
+    </div>
+  </div>
+</section>

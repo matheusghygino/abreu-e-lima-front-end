@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NewsCard from "../../components/ui/NewsCard.astro";
+import NewsFilters from "../../components/news/NewsFilters.astro";
+import { news } from "../../lib/news.mock";
+
+const tags = [...new Set(news.flatMap(post => post.tags))];
+---
+
+<BaseLayout title="Notícias — Comitê Abreu e Lima">
+  <section class="mx-auto max-w-7xl px-4 py-16">
+    <h1 class="text-3xl font-bold mb-4">Notícias</h1>
+
+    <NewsFilters tags={tags} />
+
+    <div
+      id="newsGrid"
+      class="mt-10 grid gap-6 md:grid-cols-3"
+    >
+      {news.map(post => (
+        <NewsCard
+          title={post.title}
+          excerpt={post.excerpt}
+          image={post.image}
+          href={`/noticias/${post.slug}`}
+          author={post.author}
+          tags={post.tags}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const searchInput = document.querySelector("[data-news-search]");
+  const tagSelect = document.querySelector("[data-news-tag]");
+  const cards = document.querySelectorAll(".news-card");
+
+  function filter() {
+    const query = searchInput.value.toLowerCase();
+    const activeTag = tagSelect.value;
+
+    cards.forEach(card => {
+      const title = card.dataset.title;
+      const excerpt = card.dataset.excerpt;
+      const tags = card.dataset.tags;
+
+      const matchText =
+        title.includes(query) || excerpt.includes(query);
+
+      const matchTag =
+        activeTag === "all" || tags.includes(activeTag);
+
+      card.style.display =
+        matchText && matchTag ? "block" : "none";
+    });
+  }
+
+  searchInput.addEventListener("input", filter);
+  tagSelect.addEventListener("change", filter);
+</script>

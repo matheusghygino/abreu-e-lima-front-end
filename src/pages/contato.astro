@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/ui/Section.astro";
+---
+<BaseLayout title="Contato — Comitê Anti-Imperialista Abreu e Lima">
+  <main>
+    <Section title="Contato" subtitle="Fale com o Comitê (placeholder).">
+      <div class="grid gap-8 md:grid-cols-2">
+        <form class="rounded-2xl border border-neutral-200 p-6">
+          <label class="block text-sm font-medium">Nome</label>
+          <input class="mt-2 w-full rounded-xl border border-neutral-200 px-3 py-2" placeholder="Lorem Ipsum" />
+
+          <label class="mt-4 block text-sm font-medium">E-mail</label>
+          <input class="mt-2 w-full rounded-xl border border-neutral-200 px-3 py-2" placeholder="lorem@ipsum.org" />
+
+          <label class="mt-4 block text-sm font-medium">Mensagem</label>
+          <textarea class="mt-2 min-h-[120px] w-full rounded-xl border border-neutral-200 px-3 py-2" placeholder="Lorem ipsum..." />
+
+          <button type="button" class="mt-4 rounded-full border border-neutral-900 px-5 py-2 text-sm font-medium hover:bg-neutral-900 hover:text-white">
+            Enviar (MVP)
+          </button>
+
+          <p class="mt-3 text-xs text-neutral-500">
+            No MVP, o formulário pode virar um mailto:, webhook ou serviço simples. (Sem backend aqui ainda.)
+          </p>
+        </form>
+
+        <div class="rounded-2xl border border-neutral-200 p-6">
+          <div class="text-sm font-semibold">Canais</div>
+          <div class="mt-3 space-y-2 text-sm text-neutral-700">
+            <div><span class="text-neutral-500">E-mail:</span> contato@exemplo.org</div>
+            <div><span class="text-neutral-500">Redes:</span> @exemplo</div>
+          </div>
+
+          <div class="mt-6 rounded-xl bg-neutral-50 p-4 text-xs text-neutral-600">
+            Dica: quando vocês definirem o domínio, a gente ajusta tudo para SEO e indexação com HTTPS + DNSLink.
+          </div>
+        </div>
+      </div>
+    </Section>
+  </main>
+
+</BaseLayout>

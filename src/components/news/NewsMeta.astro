@@ -1,0 +1,14 @@
+---
+import { getReadingTime } from "../../lib/readingTime";
+const { post } = Astro.props;
+---
+
+<div class="flex flex-wrap items-center gap-2 text-xs text-text-secondary">
+  <time>
+    {new Date(post.publishedAt).toLocaleDateString("pt-BR")}
+  </time>
+  <span>•</span>
+  <span>{getReadingTime(post.content)}</span>
+  <span>•</span>
+  <span>{post.author}</span>
+</div>

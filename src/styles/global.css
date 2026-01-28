@@ -1,0 +1,137 @@
+/* =========================================================
+   Fonts (pode ajustar depois)
+   ========================================================= */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@400;500;600;700&display=swap");
+
+/* Tailwind v4+ */
+@import "tailwindcss";
+
+/* =========================================================
+   THEME — Comitê Anti-Imperialista Abreu e Lima
+   Tailwind moderno (2026)
+   ========================================================= */
+@theme {
+  /* =====================
+     Tipografia
+     ===================== */
+  --font-display: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --font-body: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --font-serif: "Source Serif 4", Georgia, Cambria, "Times New Roman", serif;
+
+  /* =====================
+     Cores base
+     ===================== */
+  --color-bg: #ffffff;
+  --color-bg-muted: #f5f5f5;
+
+  --color-text-primary: #0a0a0a;
+  --color-text-secondary: #4b4b4b;
+  --color-text-inverse: #ffffff;
+
+  /* Preto institucional */
+  --color-black: #000000;
+  --color-black-soft: #111111;
+
+  /* Vermelho político (baseado na logo / header de referência) */
+  --color-primary: #9b111e;
+  --color-primary-hover: #b31222;
+  --color-primary-soft: #fbeaec;
+
+  /* Bordas */
+  --color-border: #e4e4e4;
+  --color-border-strong: #bdbdbd;
+
+  /* Estados */
+  --color-focus: #9b111e;
+
+  /* =====================
+     Layout e escala
+     ===================== */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* Tipografia (pensando em idosos) */
+  --text-base: 1.05rem;
+  --text-lg: 1.15rem;
+  --text-xl: 1.35rem;
+
+  --line-base: 1.7;
+
+  /* Header fixo */
+  --header-height: 120px;
+}
+
+
+/* =========================================================
+   Base global
+   ========================================================= */
+
+html,
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg);
+  margin: 0;
+  padding: 0;
+  line-height: var(--line-base);
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
+}
+
+/* Títulos */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+/* Links e botões */
+a,
+button {
+  cursor: pointer;
+}
+
+/* Foco visível (acessibilidade real) */
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   Conteúdo editorial / notícias
+   ========================================================= */
+
+.prose {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  line-height: 1.8;
+  color: var(--color-text-primary);
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.prose a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose a:hover {
+  color: var(--color-primary-hover);
+}

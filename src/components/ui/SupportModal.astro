@@ -1,0 +1,89 @@
+<div
+  data-support-modal
+  class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 px-4"
+>
+  <div class="relative w-full max-w-lg rounded-lg bg-bg p-6">
+    <!-- Fechar -->
+    <button
+      data-close-support
+      class="absolute right-4 top-4 text-text-secondary hover:text-primary"
+      aria-label="Fechar"
+    >
+      ✕
+    </button>
+
+    <h2 class="text-xl font-semibold mb-3">
+      Apoie nossa luta
+    </h2>
+
+    <p class="text-text-secondary mb-4">
+      O Comitê Anti-Imperialista Abreu e Lima é uma organização política
+      independente, sustentada pela solidariedade de militantes e apoiadores.
+      Sua contribuição fortalece nossas ações, publicações e atividades.
+    </p>
+
+    <div class="space-y-3">
+      <div class="border border-border rounded-md p-4">
+        <h3 class="font-semibold mb-1">Contribuição voluntária</h3>
+        <p class="text-sm text-text-secondary">
+          Em breve divulgaremos formas seguras de contribuição financeira.
+        </p>
+      </div>
+
+      <div class="border border-border rounded-md p-4">
+        <h3 class="font-semibold mb-1">Participe da organização</h3>
+        <p class="text-sm text-text-secondary">
+          Também é possível apoiar participando das atividades e comissões do Comitê.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-6 flex justify-end gap-3">
+      <a
+        href="/contato"
+        class="px-4 py-2 border border-border rounded-md hover:border-primary"
+      >
+        Entrar em contato
+      </a>
+      <button
+        data-close-support
+        class="px-4 py-2 bg-primary text-text-inverse rounded-md hover:bg-primary-hover"
+      >
+        Fechar
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function bindSupportModal() {
+    const modal = document.querySelector("[data-support-modal]");
+    const openButtons = document.querySelectorAll("[data-open-support]");
+    const closeButtons = document.querySelectorAll("[data-close-support]");
+
+    if (!modal) return;
+
+    function openModal() {
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      document.body.style.overflow = "";
+    }
+
+    openButtons.forEach(btn => btn.addEventListener("click", openModal));
+    closeButtons.forEach(btn => btn.addEventListener("click", closeModal));
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+  }
+
+  bindSupportModal();
+  document.addEventListener("astro:page-load", bindSupportModal);
+</script>
+

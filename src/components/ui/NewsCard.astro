@@ -1,0 +1,19 @@
+---
+const { title, excerpt, image, href, author, tags = [] } = Astro.props;
+---
+
+<article
+  class="news-card rounded-xl overflow-hidden bg-white shadow-sm"
+  data-title={title.toLowerCase()}
+  data-excerpt={excerpt.toLowerCase()}
+  data-tags={tags.join(",").toLowerCase()}
+>
+  <a href={href}>
+    <img src={image} alt={title} class="h-48 w-full object-cover" />
+    <div class="p-5">
+      <h3 class="font-bold text-lg mb-2">{title}</h3>
+      <p class="text-sm text-text-secondary mb-3">{excerpt}</p>
+      <span class="text-xs font-semibold">{author}</span>
+    </div>
+  </a>
+</article>

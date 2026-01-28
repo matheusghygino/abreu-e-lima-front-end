@@ -1,0 +1,17 @@
+---
+const { src, alt, caption, date } = Astro.props;
+---
+
+<figure class="group overflow-hidden rounded-lg bg-bg shadow-sm">
+  <img
+    src={src}
+    alt={alt}
+    class="h-64 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+    loading="lazy"
+  />
+
+  <figcaption class="p-3 text-sm">
+    <p class="font-medium">{caption}</p>
+    <span class="text-xs text-text-secondary">{date}</span>
+  </figcaption>
+</figure>

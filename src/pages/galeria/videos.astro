@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Section from "../../components/ui/Section.astro";
+import VideoGallery from "../../components/galeria/VideoGallery";
+import { videos } from "../../lib/gallery.mock";
+---
+
+<BaseLayout title="Galeria de Vídeos — Comitê Abreu e Lima">
+  <main>
+    <Section
+      title="Galeria de Vídeos"
+      subtitle="Vídeos produzidos e distribuídos pelo Comitê Anti-Imperialista Abreu e Lima."
+    >
+      <VideoGallery videos={videos} client:load />
+    </Section>
+  </main>
+</BaseLayout>

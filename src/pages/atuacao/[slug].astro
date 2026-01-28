@@ -1,0 +1,47 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { activities } from "../../lib/activities.mock";
+
+export function getStaticPaths() {
+  return activities.map((activity) => ({
+    params: { slug: activity.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const activity = activities.find((a) => a.slug === slug);
+
+if (!activity) {
+  throw new Error("Atividade não encontrada");
+}
+---
+
+<BaseLayout title={`${activity.title} — Comitê Abreu e Lima`}>
+  <main>
+    <section class="mx-auto max-w-4xl px-4 py-16">
+      <img
+        src={activity.image}
+        alt={activity.title}
+        class="mb-8 w-full rounded-xl object-cover"
+      />
+
+      <div class="mb-4 text-sm text-text-secondary">
+        {activity.date} • {activity.location}
+      </div>
+
+      <h1 class="mb-6 text-3xl font-bold">{activity.title}</h1>
+
+      <div class="prose max-w-none whitespace-pre-line">
+        {activity.content}
+      </div>
+
+      <div class="mt-10 flex flex-wrap gap-2">
+        {activity.tags.map((tag) => (
+          <span class="rounded-full bg-bg-muted px-3 py-1 text-xs">
+            {tag}
+          </span>
+        ))}
+      </div>
+    </section>
+  </main>
+</BaseLayout>

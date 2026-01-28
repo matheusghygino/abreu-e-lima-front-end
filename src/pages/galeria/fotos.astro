@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Section from "../../components/ui/Section.astro";
+import PhotoGallery from "../../components/galeria/PhotoGallery";
+import { photos } from "../../lib/gallery.mock";
+---
+
+<BaseLayout title="Galeria de Fotos — Comitê Abreu e Lima">
+  <main>
+    <Section
+      title="Galeria de Fotos"
+      subtitle="Registros fotográficos das atividades, atos e formações do Comitê."
+    >
+      <PhotoGallery photos={photos} client:load />
+    </Section>
+  </main>
+</BaseLayout>

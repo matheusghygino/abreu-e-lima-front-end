@@ -1,0 +1,29 @@
+---
+const { tags } = Astro.props;
+---
+
+<div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+  <!-- Busca -->
+  <input
+    type="search"
+    placeholder="Buscar notícias..."
+    class="w-full md:max-w-sm rounded-md border border-border px-4 py-2"
+    data-news-search
+  />
+
+  <!-- Seletor de Tags -->
+  <div class="w-full md:w-64">
+    <select
+      class="w-full rounded-md border border-border px-4 py-2 bg-bg"
+      data-news-tag
+    >
+      <option value="all">Todas as categorias</option>
+
+      {tags.map(tag => (
+        <option value={tag.toLowerCase()}>
+          {tag}
+        </option>
+      ))}
+    </select>
+  </div>
+</div>

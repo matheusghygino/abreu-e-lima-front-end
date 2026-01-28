@@ -1,0 +1,24 @@
+---
+import { getReadingTime } from "../../lib/readingTime";
+const { post } = Astro.props;
+---
+
+<header class="mb-10 space-y-4">
+  <h1 class="text-3xl md:text-4xl font-bold leading-tight">
+    {post.title}
+  </h1>
+
+  <div class="flex flex-wrap items-center gap-2 text-sm text-text-secondary">
+    <time>
+      {new Date(post.publishedAt).toLocaleDateString("pt-BR", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })}
+    </time>
+    <span>•</span>
+    <span>{getReadingTime(post.content)}</span>
+    <span>•</span>
+    <span>{post.author}</span>
+  </div>
+</header>

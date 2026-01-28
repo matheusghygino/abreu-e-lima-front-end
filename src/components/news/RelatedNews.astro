@@ -1,0 +1,33 @@
+---
+import NewsCard from "../ui/NewsCard.astro";
+import { news } from "../../lib/news.mock";
+
+const { currentPost } = Astro.props;
+
+const related = news
+  .filter(post =>
+    post.slug !== currentPost.slug &&
+    post.tags?.some(tag => currentPost.tags?.includes(tag))
+  )
+  .slice(0, 3);
+---
+
+{related.length > 0 && (
+  <section class="mt-20 border-t border-border pt-12">
+    <h2 class="text-xl font-bold mb-6">
+      Notícias relacionadas
+    </h2>
+
+    <div class="grid gap-6 md:grid-cols-3">
+      {related.map(post => (
+        <NewsCard
+          title={post.title}
+          excerpt={post.excerpt}
+          image={post.image}
+          href={`/noticias/${post.slug}`}
+          author={post.author}
+        />
+      ))}
+    </div>
+  </section>
+)}

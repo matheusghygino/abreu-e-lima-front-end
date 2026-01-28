@@ -1,0 +1,19 @@
+---
+const { post } = Astro.props;
+---
+
+<div class="space-y-6">
+  {post.image && (
+    <img
+      src={post.image}
+      alt={post.title}
+      class="w-full rounded-lg"
+    />
+  )}
+
+  <div class="prose prose-neutral max-w-none">
+    {post.content.split("\n").map(paragraph =>
+      paragraph.trim() ? <p>{paragraph}</p> : null
+    )}
+  </div>
+</div>
