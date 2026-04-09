@@ -1,4 +1,4 @@
-name: Deploy VPS
+name: Deploy para VPS
 
 on:
   push:
@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Executar deploy via SSH
-        uses: appleboy/ssh-action@v1.0.0
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          host: 173.249.13.43
-          username: abreuelima
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/abreuelima/public_html
