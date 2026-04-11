@@ -3,7 +3,7 @@ export const news = [
     slug: "critica-pec-seguranca-publica",
     title: "Crítica à PEC da Segurança Pública",
     excerpt:
-      "Uma análise crítica sobre a proposta que centraliza a segurança pública e amplia mecanismos de repressão.",
+      "Uma análise crítica sobre a proposta que centraliza a segurança pública e amplia mecanismos de repressão. teste",
     content: `
 A Proposta de Emenda à Constituição conhecida como PEC da Segurança Pública
 representa uma ofensiva institucional contra a autonomia dos estados e
