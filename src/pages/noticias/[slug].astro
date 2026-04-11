@@ -3,17 +3,23 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import NewsHeader from "../../components/news/NewsHeader.astro";
 import NewsBody from "../../components/news/NewsBody.astro";
 import NewsTags from "../../components/news/NewsTags.astro";
-import { news } from "../../lib/news.mock";
 import RelatedNews from "../../components/news/RelatedNews.astro";
+import { getAllNews, getNewsBySlug } from "../../lib/wordpress/news";
 
-export function getStaticPaths() {
-  return news.map(post => ({
+export async function getStaticPaths() {
+  const news = await getAllNews();
+
+  return news.map((post) => ({
     params: { slug: post.slug },
-    props: { post },
   }));
 }
 
-const { post } = Astro.props;
+const { slug } = Astro.params;
+const post = slug ? await getNewsBySlug(slug) : null;
+
+if (!post) {
+  throw new Error(`Notícia não encontrada: ${slug}`);
+}
 ---
 
 <BaseLayout title={`${post.title} — Comitê Anti-Imperialista Abreu e Lima`}>

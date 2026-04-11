@@ -2,7 +2,7 @@
 import NewsCard from "../news/NewsCard.astro";
 import { getLatestNews } from "../../lib/getLatestNews";
 
-const latestNews = getLatestNews(3);
+const latestNews = await getLatestNews(3);
 ---
 
 <section class="bg-bg-muted">
@@ -17,7 +17,7 @@ const latestNews = getLatestNews(3);
     </div>
 
     <div class="grid gap-6 md:grid-cols-3">
-      {latestNews.map(post => (
+      {latestNews.map((post) => (
         <NewsCard post={post} />
       ))}
     </div>

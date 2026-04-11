@@ -1,11 +1,5 @@
-import { news } from "./news.mock";
+import { getLatestNews as getLatestNewsFromWP } from "./wordpress/news";
 
-export function getLatestNews(limit = 3) {
-  return [...news]
-    .sort(
-      (a, b) =>
-        new Date(b.publishedAt).getTime() -
-        new Date(a.publishedAt).getTime()
-    )
-    .slice(0, limit);
+export async function getLatestNews(limit = 3) {
+  return getLatestNewsFromWP(limit);
 }

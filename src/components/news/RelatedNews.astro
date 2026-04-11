@@ -1,13 +1,16 @@
 ---
 import NewsCard from "../ui/NewsCard.astro";
-import { news } from "../../lib/news.mock";
+import { getAllNews } from "../../lib/wordpress/news";
 
 const { currentPost } = Astro.props;
 
-const related = news
-  .filter(post =>
-    post.slug !== currentPost.slug &&
-    post.tags?.some(tag => currentPost.tags?.includes(tag))
+const allNews = await getAllNews();
+
+const related = allNews
+  .filter(
+    (post) =>
+      post.slug !== currentPost.slug &&
+      post.tags?.some((tag) => currentPost.tags?.includes(tag))
   )
   .slice(0, 3);
 ---
@@ -19,13 +22,14 @@ const related = news
     </h2>
 
     <div class="grid gap-6 md:grid-cols-3">
-      {related.map(post => (
+      {related.map((post) => (
         <NewsCard
           title={post.title}
           excerpt={post.excerpt}
           image={post.image}
           href={`/noticias/${post.slug}`}
           author={post.author}
+          tags={post.tags}
         />
       ))}
     </div>

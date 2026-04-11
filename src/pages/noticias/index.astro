@@ -2,9 +2,10 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import NewsCard from "../../components/ui/NewsCard.astro";
 import NewsFilters from "../../components/news/NewsFilters.astro";
-import { news } from "../../lib/news.mock";
+import { getAllNews } from "../../lib/wordpress/news";
 
-const tags = [...new Set(news.flatMap(post => post.tags))];
+const news = await getAllNews();
+const tags = [...new Set(news.flatMap((post) => post.tags))];
 ---
 
 <BaseLayout title="Notícias — Comitê Abreu e Lima">
@@ -17,7 +18,7 @@ const tags = [...new Set(news.flatMap(post => post.tags))];
       id="newsGrid"
       class="mt-10 grid gap-6 md:grid-cols-3"
     >
-      {news.map(post => (
+      {news.map((post) => (
         <NewsCard
           title={post.title}
           excerpt={post.excerpt}
@@ -56,6 +57,6 @@ const tags = [...new Set(news.flatMap(post => post.tags))];
     });
   }
 
-  searchInput.addEventListener("input", filter);
-  tagSelect.addEventListener("change", filter);
+  searchInput?.addEventListener("input", filter);
+  tagSelect?.addEventListener("change", filter);
 </script>

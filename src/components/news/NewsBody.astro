@@ -12,8 +12,6 @@ const { post } = Astro.props;
   )}
 
   <div class="prose prose-neutral max-w-none">
-    {post.content.split("\n").map(paragraph =>
-      paragraph.trim() ? <p>{paragraph}</p> : null
-    )}
+    <div set:html={post.content} />
   </div>
 </div>
