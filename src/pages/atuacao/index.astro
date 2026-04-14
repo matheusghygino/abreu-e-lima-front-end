@@ -2,7 +2,9 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Section from "../../components/ui/Section.astro";
 import ActivityCard from "../../components/atuacao/ActivityCard.astro";
-import { activities } from "../../lib/activities.mock";
+import { getAllActivities } from "../../lib/wordpress/activities";
+
+const activities = await getAllActivities();
 ---
 
 <BaseLayout title="Atuação — Comitê Abreu e Lima">
@@ -11,7 +13,6 @@ import { activities } from "../../lib/activities.mock";
       title="Atuação"
       subtitle="Organização, mobilização e formação política na prática."
     >
-      <!-- BLOCO INSTITUCIONAL -->
       <div class="mx-auto max-w-3xl space-y-5 text-text-secondary">
         <p>
           A atuação do Comitê Anti-Imperialista General Abreu e Lima se orienta
@@ -30,7 +31,6 @@ import { activities } from "../../lib/activities.mock";
           contra a dominação imperialista.
         </p>
 
-        <!-- ÁREAS DE ATUAÇÃO -->
         <ul class="mt-6 grid gap-3 text-sm sm:grid-cols-2">
           <li>• Organização de atos e manifestações políticas</li>
           <li>• Formação política e atividades de estudo</li>
@@ -40,10 +40,8 @@ import { activities } from "../../lib/activities.mock";
         </ul>
       </div>
 
-      <!-- DIVISOR CLARO -->
       <div class="my-14 border-t border-border"></div>
 
-      <!-- BLOCO DOS REGISTROS -->
       <div class="mb-8 max-w-2xl">
         <h2 class="text-2xl font-semibold">
           Registros de Atuação
@@ -54,7 +52,6 @@ import { activities } from "../../lib/activities.mock";
         </p>
       </div>
 
-      <!-- GRID DE CARDS -->
       <div class="grid gap-8 md:grid-cols-3">
         {activities.map((activity) => (
           <ActivityCard

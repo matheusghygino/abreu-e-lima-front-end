@@ -2,7 +2,9 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Section from "../../components/ui/Section.astro";
 import PhotoGallery from "../../components/galeria/PhotoGallery";
-import { photos } from "../../lib/gallery.mock";
+import { getAllPhotos } from "../../lib/wordpress/gallery";
+
+const photos = await getAllPhotos();
 ---
 
 <BaseLayout title="Galeria de Fotos — Comitê Abreu e Lima">

@@ -2,7 +2,9 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Section from "../../components/ui/Section.astro";
 import VideoGallery from "../../components/galeria/VideoGallery";
-import { videos } from "../../lib/gallery.mock";
+import { getAllVideos } from "../../lib/wordpress/gallery";
+
+const videos = await getAllVideos();
 ---
 
 <BaseLayout title="Galeria de Vídeos — Comitê Abreu e Lima">
