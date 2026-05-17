@@ -1,0 +1,219 @@
+---
+const SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+
+<form
+  data-contact-form
+  data-site-key={SITE_KEY || ""}
+  class="rounded-2xl border border-border p-6 space-y-5"
+  novalidate
+>
+  <div aria-hidden="true" style="position:absolute;top:0;left:0;width:0;height:0;overflow:hidden;opacity:0;pointer-events:none">
+    <input type="text" name="assunto" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <div>
+    <label for="nome" class="block text-sm font-medium text-text-primary">Nome</label>
+    <input
+      type="text"
+      id="nome"
+      name="nome"
+      required
+      class="mt-1 w-full rounded-lg border border-border px-3 py-2 text-text-primary placeholder:text-text-secondary/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
+      placeholder="Seu nome"
+    />
+  </div>
+
+  <div>
+    <label for="telefone" class="block text-sm font-medium text-text-primary">Telefone</label>
+    <input
+      type="tel"
+      id="telefone"
+      name="telefone"
+      class="mt-1 w-full rounded-lg border border-border px-3 py-2 text-text-primary placeholder:text-text-secondary/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
+      placeholder="(11) 99999-9999"
+    />
+  </div>
+
+  <div>
+    <label for="email" class="block text-sm font-medium text-text-primary">E-mail</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      class="mt-1 w-full rounded-lg border border-border px-3 py-2 text-text-primary placeholder:text-text-secondary/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
+      placeholder="seu@email.com"
+    />
+  </div>
+
+  <div>
+    <label for="mensagem" class="block text-sm font-medium text-text-primary">Mensagem</label>
+    <textarea
+      id="mensagem"
+      name="mensagem"
+      required
+      rows="5"
+      class="mt-1 min-h-[120px] w-full rounded-lg border border-border px-3 py-2 text-text-primary placeholder:text-text-secondary/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors resize-y"
+      placeholder="Escreva sua mensagem..."
+    ></textarea>
+  </div>
+
+  <div data-turnstile-container class="min-h-[65px] flex items-center justify-center">
+    <div data-turnstile-loading class="text-sm text-text-secondary">Carregando verificação de segurança...</div>
+  </div>
+
+  <button
+    type="submit"
+    data-submit-btn
+    class="w-full rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-text-inverse hover:bg-primary-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    Enviar mensagem
+  </button>
+
+  <div data-form-status class="text-sm" role="alert"></div>
+</form>
+
+<script>
+  (function () {
+    function initForm() {
+      var form = document.querySelector("[data-contact-form]");
+      if (!form) return;
+      if (form.dataset.initialized) return;
+      form.dataset.initialized = "true";
+
+      var WEBHOOK_URL = "https://n8n.scalyns.com/webhook/abreu-e-lima";
+      var SITE_KEY = form.dataset.siteKey;
+      var submitBtn = form.querySelector("[data-submit-btn]");
+      var statusEl = form.querySelector("[data-form-status]");
+      var turnstileContainer = form.querySelector("[data-turnstile-container]");
+      var loadingEl = form.querySelector("[data-turnstile-loading]");
+      var originalBtnText = submitBtn ? submitBtn.textContent : "";
+      var turnstileWidgetId = null;
+
+      function setStatus(msg, type) {
+        if (!statusEl) return;
+        statusEl.textContent = msg;
+        statusEl.className =
+          "text-sm font-medium " +
+          (type === "error"
+            ? "text-red-600"
+            : type === "success"
+              ? "text-green-600"
+              : type === "warning"
+                ? "text-amber-600"
+                : "text-text-secondary");
+      }
+
+      function setLoading(loading) {
+        if (!submitBtn) return;
+        submitBtn.disabled = loading;
+        submitBtn.textContent = loading ? "Enviando..." : originalBtnText;
+      }
+
+      function loadTurnstileScript() {
+        return new Promise(function (resolve) {
+          if (window.turnstile) {
+            resolve(window.turnstile);
+            return;
+          }
+          window._turnstileCb = function () {
+            resolve(window.turnstile);
+          };
+          var s = document.createElement("script");
+          s.src =
+            "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=_turnstileCb";
+          s.async = true;
+          s.defer = true;
+          document.head.appendChild(s);
+        });
+      }
+
+      async function initTurnstile() {
+        if (!SITE_KEY) {
+          if (turnstileContainer)
+            turnstileContainer.innerHTML =
+              '<span class="text-sm text-text-secondary opacity-50">Verificação não configurada</span>';
+          console.warn("[ContactForm] Turnstile site key not set. Add PUBLIC_TURNSTILE_SITE_KEY to .env");
+          return;
+        }
+        try {
+          var turnstile = await loadTurnstileScript();
+          if (turnstileContainer) turnstileContainer.innerHTML = "";
+          turnstileWidgetId = turnstile.render(turnstileContainer, {
+            sitekey: SITE_KEY,
+            theme: "light",
+          });
+        } catch (err) {
+          console.error("[ContactForm] Turnstile load failed:", err);
+          if (turnstileContainer)
+            turnstileContainer.innerHTML =
+              '<span class="text-sm text-amber-600">Verificação indisponível — você pode enviar mesmo assim</span>';
+        }
+      }
+
+      initTurnstile();
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        setStatus("", "");
+
+        var hp = form.querySelector('[name="assunto"]');
+        if (hp && hp.value) {
+          console.warn("[ContactForm] Honeypot triggered — bot detected");
+          return;
+        }
+
+        var nome = form.querySelector('[name="nome"]').value.trim();
+        var email = form.querySelector('[name="email"]').value.trim();
+        var mensagem = form.querySelector('[name="mensagem"]').value.trim();
+        var telefone = form.querySelector('[name="telefone"]').value.trim();
+
+        if (!nome || !email || !mensagem) {
+          setStatus("Preencha todos os campos obrigatórios.", "error");
+          return;
+        }
+
+        if (window.turnstile && turnstileWidgetId) {
+          var token = window.turnstile.getResponse(turnstileWidgetId);
+          if (!token) {
+            setStatus("Complete a verificação de segurança.", "error");
+            return;
+          }
+        }
+
+        setLoading(true);
+
+        try {
+          var res = await fetch(WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nome: nome, telefone: telefone, email: email, mensagem: mensagem }),
+          });
+
+          if (!res.ok) throw new Error("Server error (status " + res.status + ")");
+
+          setStatus(
+            "Mensagem enviada com sucesso! Entraremos em contato em breve.",
+            "success",
+          );
+          form.reset();
+          if (window.turnstile && turnstileWidgetId) {
+            window.turnstile.reset(turnstileWidgetId);
+          }
+        } catch (err) {
+          console.error("[ContactForm] Submit failed:", err);
+          setStatus(
+            "Erro ao enviar mensagem. Tente novamente mais tarde.",
+            "error",
+          );
+        } finally {
+          setLoading(false);
+        }
+      });
+    }
+
+    initForm();
+    document.addEventListener("astro:page-load", initForm);
+  })();
+</script>

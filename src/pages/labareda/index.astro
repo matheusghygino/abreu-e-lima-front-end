@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NewsCard from "../../components/ui/NewsCard.astro";
+import { getAllArticles } from "../../lib/wordpress/labareda";
+
+const articles = await getAllArticles();
+const tags = [...new Set(articles.flatMap((post) => post.tags))];
+---
+
+<BaseLayout title="Labareda — Comitê Abreu e Lima">
+  <section class="mx-auto max-w-7xl px-4 py-16">
+    <h1 class="text-3xl font-bold mb-4">Labareda</h1>
+
+    <div id="newsGrid" class="mt-10 grid gap-6 md:grid-cols-3">
+      {articles.map((post) => (
+        <NewsCard
+          title={post.title}
+          excerpt={post.excerpt}
+          image={post.image}
+          href={`/labareda/${post.slug}`}
+          author={post.author}
+          tags={post.tags}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

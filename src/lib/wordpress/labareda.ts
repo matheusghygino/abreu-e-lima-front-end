@@ -1,7 +1,7 @@
 import { fetchWP } from "./client";
 import { getCategoryId } from "./categories";
 
-export type NewsPost = {
+export type LabaredaPost = {
   slug: string;
   title: string;
   excerpt: string;
@@ -48,7 +48,7 @@ function stripHtml(html: string): string {
     .trim();
 }
 
-function mapPost(post: WPPost): NewsPost {
+function mapPost(post: WPPost): LabaredaPost {
   const featuredImage =
     post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "/images/noticias/pec.jpeg";
 
@@ -73,8 +73,8 @@ function mapPost(post: WPPost): NewsPost {
   };
 }
 
-export async function getAllNews(): Promise<NewsPost[]> {
-  const categoryId = await getCategoryId("noticias");
+export async function getAllArticles(): Promise<LabaredaPost[]> {
+  const categoryId = await getCategoryId("labareda");
   if (!categoryId) return [];
   const posts = await fetchWP<WPPost[]>(
     `/wp-json/wp/v2/posts?_embed&per_page=100&categories=${categoryId}`
@@ -82,16 +82,7 @@ export async function getAllNews(): Promise<NewsPost[]> {
   return posts.map(mapPost);
 }
 
-export async function getLatestNews(limit = 3): Promise<NewsPost[]> {
-  const categoryId = await getCategoryId("noticias");
-  if (!categoryId) return [];
-  const posts = await fetchWP<WPPost[]>(
-    `/wp-json/wp/v2/posts?_embed&per_page=${limit}&categories=${categoryId}`
-  );
-  return posts.map(mapPost);
-}
-
-export async function getNewsBySlug(slug: string): Promise<NewsPost | null> {
+export async function getArticleBySlug(slug: string): Promise<LabaredaPost | null> {
   const posts = await fetchWP<WPPost[]>(
     `/wp-json/wp/v2/posts?slug=${encodeURIComponent(slug)}&_embed`
   );

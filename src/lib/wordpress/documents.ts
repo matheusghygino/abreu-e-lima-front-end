@@ -1,4 +1,5 @@
 import { fetchWP } from "./client";
+import { getCategoryId } from "./categories";
 
 export type DocumentItem = {
   title: string;
@@ -40,10 +41,11 @@ function mapDocument(item: WPDocument): DocumentItem {
 }
 
 export async function getAllDocuments(): Promise<DocumentItem[]> {
+  const categoryId = await getCategoryId("documentos");
+  if (!categoryId) return [];
   const items = await fetchWP<WPDocument[]>(
-    "/wp-json/wp/v2/document?per_page=100"
+    `/wp-json/wp/v2/posts?_embed&per_page=100&categories=${categoryId}`
   );
-
   return items.map(mapDocument);
 }
 

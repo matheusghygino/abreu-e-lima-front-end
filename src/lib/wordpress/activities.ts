@@ -1,4 +1,5 @@
 import { fetchWP } from "./client";
+import { getCategoryId } from "./categories";
 
 export type ActivityItem = {
   slug: string;
@@ -66,10 +67,11 @@ function mapActivity(item: WPActivity): ActivityItem {
 }
 
 export async function getAllActivities(): Promise<ActivityItem[]> {
+  const categoryId = await getCategoryId("atuacao");
+  if (!categoryId) return [];
   const items = await fetchWP<WPActivity[]>(
-    "/wp-json/wp/v2/activity?_embed&per_page=100"
+    `/wp-json/wp/v2/posts?_embed&per_page=100&categories=${categoryId}`
   );
-
   return items.map(mapActivity);
 }
 
@@ -77,10 +79,8 @@ export async function getActivityBySlug(
   slug: string
 ): Promise<ActivityItem | null> {
   const items = await fetchWP<WPActivity[]>(
-    `/wp-json/wp/v2/activity?slug=${encodeURIComponent(slug)}&_embed`
+    `/wp-json/wp/v2/posts?slug=${encodeURIComponent(slug)}&_embed`
   );
-
   if (!items.length) return null;
-
   return mapActivity(items[0]);
 }

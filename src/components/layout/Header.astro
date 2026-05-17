@@ -116,7 +116,42 @@ import logo from "../../assets/logo.png";
           </div>
         </div>
 
-        <a href="/noticias" class="hover:text-primary">Notícias</a>
+        <!-- Notícias Dropdown -->
+        <div class="relative">
+          <button
+            data-news-toggle-desktop
+            class="flex items-center gap-1 hover:text-primary"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Notícias
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path
+                fill-rule="evenodd"
+                d="M5.23 7.21a.75.75 0 011.06.02L10 10.94
+                   l3.71-3.71a.75.75 0 111.06 1.06
+                   l-4.24 4.24a.75.75 0 01-1.06 0
+                   L5.21 8.29a.75.75 0 01.02-1.08z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </button>
+
+          <div
+            data-news-menu-desktop
+            class="absolute left-0 top-full mt-2 w-44
+                   rounded-md border border-border bg-bg shadow-lg
+                   opacity-0 pointer-events-none translate-y-1
+                   transition-all duration-200"
+          >
+            <a href="/noticias" class="block px-4 py-2 hover:bg-bg-muted">
+              Notícias
+            </a>
+            <a href="/labareda" class="block px-4 py-2 hover:bg-bg-muted">
+              Labareda
+            </a>
+          </div>
+        </div>
+
         <a href="/noticiasq" class="hover:text-primary">Nas Redes</a>
         <a href="/contato" class="hover:text-primary">Contato</a>
       </nav>
@@ -213,7 +248,47 @@ import logo from "../../assets/logo.png";
       </div>
     </div>
 
-    <a href="/noticias" class="hover:text-primary">Notícias</a>
+    <!-- Notícias Accordion -->
+    <div class="flex flex-col items-center gap-2">
+      <button
+        data-news-toggle-mobile
+        class="flex items-center gap-1 hover:text-primary"
+        aria-expanded="false"
+      >
+        Notícias
+        <svg
+          data-news-icon-mobile
+          class="h-4 w-4 transition-transform"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M5.23 7.21a.75.75 0 011.06.02L10 10.94
+               l3.71-3.71a.75.75 0 111.06 1.06
+               l-4.24 4.24a.75.75 0 01-1.06 0
+               L5.21 8.29a.75.75 0 01.02-1.08z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </button>
+
+      <div data-news-menu-mobile class="hidden flex flex-col gap-2 mt-2">
+        <a
+          href="/noticias"
+          class="block text-sm font-normal text-text-secondary hover:text-primary transition-colors"
+        >
+          Notícias
+        </a>
+
+        <a
+          href="/labareda"
+          class="block text-sm font-normal text-text-secondary hover:text-primary transition-colors"
+        >
+          Labareda
+        </a>
+      </div>
+    </div>
+
     <a href="/noticiasq" class="hover:text-primary">Em nossas redes</a>
     <a href="/contato" class="hover:text-primary">Contato</a>
   </nav>
@@ -265,45 +340,43 @@ import logo from "../../assets/logo.png";
     });
 
     // DROPDOWN DESKTOP
-    const gBtn = document.querySelector("[data-gallery-toggle-desktop]");
-    const gMenu = document.querySelector("[data-gallery-menu-desktop]");
-
-    if (gBtn && gMenu) {
+    function setupDropdown(btnSel, menuSel) {
+      const btn = document.querySelector(btnSel);
+      const menu = document.querySelector(menuSel);
+      if (!btn || !menu) return;
       const open = () => {
-        gMenu.classList.remove(
-          "opacity-0",
-          "pointer-events-none",
-          "translate-y-1",
-        );
-        gMenu.classList.add("opacity-100", "translate-y-0");
+        menu.classList.remove("opacity-0", "pointer-events-none", "translate-y-1");
+        menu.classList.add("opacity-100", "translate-y-0");
       };
       const close = () => {
-        gMenu.classList.add(
-          "opacity-0",
-          "pointer-events-none",
-          "translate-y-1",
-        );
-        gMenu.classList.remove("opacity-100", "translate-y-0");
+        menu.classList.add("opacity-0", "pointer-events-none", "translate-y-1");
+        menu.classList.remove("opacity-100", "translate-y-0");
       };
-
-      gBtn.addEventListener("mouseenter", open);
-      gMenu.addEventListener("mouseenter", open);
-      gBtn.addEventListener("mouseleave", () =>
-        setTimeout(() => !gMenu.matches(":hover") && close(), 100),
+      btn.addEventListener("mouseenter", open);
+      menu.addEventListener("mouseenter", open);
+      btn.addEventListener("mouseleave", () =>
+        setTimeout(() => !menu.matches(":hover") && close(), 100),
       );
-      gMenu.addEventListener("mouseleave", close);
+      menu.addEventListener("mouseleave", close);
     }
 
-    // ACCORDION MOBILE GALERIA
-    const gToggleM = document.querySelector("[data-gallery-toggle-mobile]");
-    const gMenuM = document.querySelector("[data-gallery-menu-mobile]");
-    const gIconM = document.querySelector("[data-gallery-icon-mobile]");
+    setupDropdown("[data-gallery-toggle-desktop]", "[data-gallery-menu-desktop]");
+    setupDropdown("[data-news-toggle-desktop]", "[data-news-menu-desktop]");
 
-    gToggleM?.addEventListener("click", () => {
-      const open = !gMenuM.classList.contains("hidden");
-      gMenuM.classList.toggle("hidden", open);
-      gIconM.classList.toggle("rotate-180", !open);
-    });
+    // ACCORDION MOBILE
+    function setupAccordion(toggleSel, menuSel, iconSel) {
+      const toggle = document.querySelector(toggleSel);
+      const menu = document.querySelector(menuSel);
+      const icon = document.querySelector(iconSel);
+      toggle?.addEventListener("click", () => {
+        const open = !menu.classList.contains("hidden");
+        menu.classList.toggle("hidden", open);
+        icon?.classList.toggle("rotate-180", !open);
+      });
+    }
+
+    setupAccordion("[data-gallery-toggle-mobile]", "[data-gallery-menu-mobile]", "[data-gallery-icon-mobile]");
+    setupAccordion("[data-news-toggle-mobile]", "[data-news-menu-mobile]", "[data-news-icon-mobile]");
 
     // HEADER SCROLL
     let lastY = window.scrollY;

@@ -1,4 +1,5 @@
 import { fetchWP } from "./client";
+import { getCategoryId } from "./categories";
 
 export type PhotoItem = {
   src: string;
@@ -81,8 +82,10 @@ function extractTags(embedded?: WPPhoto["_embedded"] | WPVideo["_embedded"]) {
 }
 
 export async function getAllPhotos(): Promise<PhotoItem[]> {
+  const categoryId = await getCategoryId("fotos");
+  if (!categoryId) return [];
   const items = await fetchWP<WPPhoto[]>(
-    "/wp-json/wp/v2/photo?_embed&per_page=100"
+    `/wp-json/wp/v2/posts?_embed&per_page=100&categories=${categoryId}`
   );
 
   return items.map((item) => ({
@@ -98,8 +101,10 @@ export async function getAllPhotos(): Promise<PhotoItem[]> {
 }
 
 export async function getAllVideos(): Promise<VideoItem[]> {
+  const categoryId = await getCategoryId("videos");
+  if (!categoryId) return [];
   const items = await fetchWP<WPVideo[]>(
-    "/wp-json/wp/v2/video?_embed&per_page=100"
+    `/wp-json/wp/v2/posts?_embed&per_page=100&categories=${categoryId}`
   );
 
   return items.map((item) => ({
