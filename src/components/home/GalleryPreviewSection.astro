@@ -1,12 +1,10 @@
 ---
+import { getAllPhotos, getAllVideos } from "../../lib/wordpress/gallery";
 
-import { photos, videos } from "../../lib/gallery.mock";
-import PhotoCard from "../galeria/PhotoCard.astro";
-import VideoCard from "../galeria/VideoCard.astro";
-import PhotoModal from "../galeria/PhotoModal.astro";
-
-const latestPhotos = photos.slice(0, 4);
-const latestVideos = videos.slice(0, 4);
+const allPhotos = await getAllPhotos();
+const allVideos = await getAllVideos();
+const latestPhotos = allPhotos.slice(0, 4);
+const latestVideos = allVideos.slice(0, 4);
 ---
 
 <section class="bg-bg-muted">
@@ -30,7 +28,18 @@ const latestVideos = videos.slice(0, 4);
 
       <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
         {latestPhotos.map((photo) => (
-          <PhotoCard {...photo} />
+          <figure class="overflow-hidden rounded-lg bg-bg shadow-sm">
+            <img
+              src={photo.src}
+              alt={photo.alt}
+              class="h-48 w-full object-cover"
+              loading="lazy"
+            />
+            <figcaption class="p-3 text-sm">
+              <p class="font-medium">{photo.title}</p>
+              <span class="text-xs text-text-secondary">{photo.date}</span>
+            </figcaption>
+          </figure>
         ))}
       </div>
     </div>
@@ -46,11 +55,23 @@ const latestVideos = videos.slice(0, 4);
 
       <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
         {latestVideos.map((video) => (
-          <VideoCard {...video} />
+          <div class="overflow-hidden rounded-lg bg-bg shadow-sm">
+            <div class="aspect-video w-full bg-bg-muted flex items-center justify-center text-text-secondary text-sm">
+              {video.src ? (
+                <video controls preload="metadata" poster={video.poster || undefined} class="h-full w-full object-cover">
+                  <source src={video.src} />
+                </video>
+              ) : (
+                <span>Vídeo indisponível</span>
+              )}
+            </div>
+            <div class="p-3 text-sm">
+              <p class="font-medium">{video.title}</p>
+              <span class="text-xs text-text-secondary">{video.date}</span>
+            </div>
+          </div>
         ))}
       </div>
     </div>
   </div>
-
-  <PhotoModal />
 </section>
