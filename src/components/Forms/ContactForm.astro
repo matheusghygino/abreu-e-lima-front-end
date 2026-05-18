@@ -82,7 +82,7 @@ const SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       if (form.dataset.initialized) return;
       form.dataset.initialized = "true";
 
-      var WEBHOOK_URL = "https://comiteabreuelima.coletivo.net.br/webhooks/contact";
+      var WEBHOOK_URL = "/webhooks/contact";
       var SITE_KEY = form.dataset.siteKey;
       var submitBtn = form.querySelector("[data-submit-btn]");
       var statusEl = form.querySelector("[data-form-status]");
