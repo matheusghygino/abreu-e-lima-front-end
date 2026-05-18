@@ -82,7 +82,7 @@ const SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       if (form.dataset.initialized) return;
       form.dataset.initialized = "true";
 
-      var WEBHOOK_URL = "https://n8n.scalyns.com/webhook/abreu-e-lima";
+      var WEBHOOK_URL = "http://127.0.0.1:9010/contact";
       var SITE_KEY = form.dataset.siteKey;
       var submitBtn = form.querySelector("[data-submit-btn]");
       var statusEl = form.querySelector("[data-form-status]");
@@ -164,7 +164,7 @@ const SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
           return;
         }
 
-        var nome = form.querySelector('[name="nome"]').value.trim();
+        var name = form.querySelector('[name="nome"]').value.trim();
         var email = form.querySelector('[name="email"]').value.trim();
         var mensagem = form.querySelector('[name="mensagem"]').value.trim();
         var telefone = form.querySelector('[name="telefone"]').value.trim();
