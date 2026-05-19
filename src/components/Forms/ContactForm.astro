@@ -188,7 +188,7 @@ const SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
           var res = await fetch(WEBHOOK_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nome: nome, telefone: telefone, email: email, mensagem: mensagem }),
+            body: JSON.stringify({ nome: nome, assunto: 'Contato via site', email: email, mensagem: telefone +' '+ mensagem }),
           });
 
           if (!res.ok) throw new Error("Server error (status " + res.status + ")");
