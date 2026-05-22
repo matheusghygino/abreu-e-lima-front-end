@@ -82,7 +82,7 @@ const SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       if (form.dataset.initialized) return;
       form.dataset.initialized = "true";
 
-      var WEBHOOK_URL = "https://n8n.scalyns.com/webhook/abreu-e-lima";
+      var WEBHOOK_URL = "/webhooks/contact";
       var SITE_KEY = form.dataset.siteKey;
       var submitBtn = form.querySelector("[data-submit-btn]");
       var statusEl = form.querySelector("[data-form-status]");
@@ -188,7 +188,7 @@ const SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
           var res = await fetch(WEBHOOK_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nome: nome, telefone: telefone, email: email, mensagem: mensagem }),
+            body: JSON.stringify({ nome: nome, assunto: 'Contato via site', email: email, mensagem: telefone +' '+ mensagem }),
           });
 
           if (!res.ok) throw new Error("Server error (status " + res.status + ")");

@@ -4,6 +4,9 @@ import tailwindcss from "@tailwindcss/vite";
 import preact from "@astrojs/preact";
 
 export default defineConfig({
+  build: {
+    concurrency: 3,
+  },
   output: "static",
   integrations: [preact()],
   vite: {
