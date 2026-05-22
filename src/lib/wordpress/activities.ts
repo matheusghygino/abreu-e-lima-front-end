@@ -1,5 +1,6 @@
 import { fetchWP } from "./client";
 import { getCategoryId } from "./categories";
+import { htmlToText } from "../htmlText";
 
 export type ActivityItem = {
   slug: string;
@@ -41,10 +42,6 @@ type WPActivity = {
   };
 };
 
-function stripHtml(html: string): string {
-  return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-}
-
 function mapActivity(item: WPActivity): ActivityItem {
   const tags =
     item._embedded?.["wp:term"]
@@ -54,8 +51,8 @@ function mapActivity(item: WPActivity): ActivityItem {
 
   return {
     slug: item.slug,
-    title: stripHtml(item.title.rendered),
-    excerpt: stripHtml(item.excerpt.rendered),
+    title: htmlToText(item.title.rendered),
+    excerpt: htmlToText(item.excerpt.rendered),
     image:
       item._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
       "/images/galeria/fotos/foto1.jpeg",

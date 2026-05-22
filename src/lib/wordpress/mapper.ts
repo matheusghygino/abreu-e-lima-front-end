@@ -1,8 +1,5 @@
 import type { WPPost } from "./types";
-
-function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, "").trim();
-}
+import { htmlToText } from "../htmlText";
 
 export type NewsItem = {
   slug: string;
@@ -26,8 +23,8 @@ export function mapWPPostToNews(post: WPPost): NewsItem {
 
   return {
     slug: post.slug,
-    title: post.title.rendered,
-    excerpt: stripHtml(post.excerpt.rendered),
+    title: htmlToText(post.title.rendered),
+    excerpt: htmlToText(post.excerpt.rendered),
     content: post.content.rendered,
     image: featuredMedia?.source_url || "/images/noticias/placeholder.jpg",
     author: author?.name || "Comitê Abreu e Lima",

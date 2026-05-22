@@ -1,5 +1,6 @@
 import { fetchWP } from "./client";
 import { getCategoryId } from "./categories";
+import { htmlToText } from "../htmlText";
 
 export type DocumentItem = {
   title: string;
@@ -25,14 +26,10 @@ type WPDocument = {
   };
 };
 
-function stripHtml(html: string): string {
-  return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-}
-
 function mapDocument(item: WPDocument): DocumentItem {
   return {
-    title: stripHtml(item.title.rendered),
-    description: stripHtml(item.excerpt.rendered),
+    title: htmlToText(item.title.rendered),
+    description: htmlToText(item.excerpt.rendered),
     fileUrl: item.acf?.file_url || "",
     type: item.acf?.file_type || "",
     year: item.acf?.year || "",

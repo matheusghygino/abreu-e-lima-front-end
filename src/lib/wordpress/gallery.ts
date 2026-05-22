@@ -1,5 +1,6 @@
 import { fetchWP } from "./client";
 import { getCategoryId } from "./categories";
+import { htmlToText } from "../htmlText";
 
 export type PhotoItem = {
   src: string;
@@ -68,10 +69,6 @@ type WPVideo = {
   };
 };
 
-function stripHtml(html: string): string {
-  return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-}
-
 function extractTags(embedded?: WPPhoto["_embedded"] | WPVideo["_embedded"]) {
   return (
     embedded?.["wp:term"]
@@ -90,9 +87,9 @@ export async function getAllPhotos(): Promise<PhotoItem[]> {
 
   return items.map((item) => ({
     src: item._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "",
-    alt: item._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || stripHtml(item.title.rendered),
-    title: stripHtml(item.title.rendered),
-    description: stripHtml(item.excerpt.rendered),
+    alt: item._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || htmlToText(item.title.rendered),
+    title: htmlToText(item.title.rendered),
+    description: htmlToText(item.excerpt.rendered),
     date: item.date,
     location: item.acf?.location || "",
     type: item.acf?.photo_type || "",
@@ -109,8 +106,8 @@ export async function getAllVideos(): Promise<VideoItem[]> {
 
   return items.map((item) => ({
     id: item.slug,
-    title: stripHtml(item.title.rendered),
-    description: stripHtml(item.excerpt.rendered),
+    title: htmlToText(item.title.rendered),
+    description: htmlToText(item.excerpt.rendered),
     src: item.acf?.video_url || "",
     poster: item.acf?.poster_url || "",
     date: item.date,

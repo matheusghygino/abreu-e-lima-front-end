@@ -1,5 +1,6 @@
 import { fetchWP } from "./client";
 import { getCategoryId } from "./categories";
+import { htmlToText } from "../htmlText";
 
 export type LabaredaPost = {
   slug: string;
@@ -41,13 +42,6 @@ type WPPost = {
   };
 };
 
-function stripHtml(html: string): string {
-  return html
-    .replace(/<[^>]+>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
 function mapPost(post: WPPost): LabaredaPost {
   const featuredImage =
     post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "/images/noticias/pec.jpeg";
@@ -63,8 +57,8 @@ function mapPost(post: WPPost): LabaredaPost {
 
   return {
     slug: post.slug,
-    title: stripHtml(post.title.rendered),
-    excerpt: stripHtml(post.excerpt.rendered),
+    title: htmlToText(post.title.rendered),
+    excerpt: htmlToText(post.excerpt.rendered),
     content: post.content.rendered,
     image: featuredImage,
     author,
